@@ -7,6 +7,15 @@ This custom component gets fitness data from your account. Please note that the 
 
 # Usage
 
+## Configuration
+The API login with username/password has stopped working, so we have to use cookie session data instead.
+
+Run the following command on you local machine:
+`python cookiejar_generate.py`
+
+This should generate `myfitnesspal_cookiejar.pkl` which you should copy to `custom_components/my_fitnesspal/myfitnesspal_cookiejar.pkl`
+
+
 ## Copy and paste
 *If you use HACS, skip this step!*
 The component can be used by copying everything under the `custom_component` folder to your `custom_component`, i.e. the `my_fitnesspal` folder.

@@ -3,6 +3,8 @@ import asyncio
 import logging
 from datetime import timedelta, datetime, date
 from typing import Dict
+from http.cookiejar import CookieJar
+import pickle
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import Config, HomeAssistant
@@ -46,7 +48,13 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> b
     # Lib does I/O in the init...
     def wrap_client():
         """Wrap the fitnesspal client."""
-        return ext_myfitnesspal.Client(username, password)
+        # read cookie jar
+        current_path = pathlib.Path(__file__).parent.resolve()
+        file = open(f"{current_path}/myfitnesspal_cookiejar.pkl",'rb')
+        jar = pickle.load(file)
+        file.close()
+        return ext_myfitnesspal.Client(cookiejar=jar)
+        #return ext_myfitnesspal.Client(username, password)
 
     client = await hass.async_add_executor_job(wrap_client)
 
